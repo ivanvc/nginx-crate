@@ -54,6 +54,7 @@
       :gzip_http_version "1.0"
       :gzip_comp_level "2"
       :gzip_proxied "any"
+      :gzip_min_length 500
       :gzip_types ["text/plain"
                    "text/html"
                    "text/css"
@@ -62,14 +63,17 @@
                    "application/xml"
                    "application/xml+rss"
                    "text/javascript"]
+      :worker_processes 1
       :client_max_body_size "10M"
       :sendfile "on"
       :tcp_nopush "off"
       :tcp_nodelay "off"
       :keepalive "on"
       :keepalive_timeout 65
-      :worker_processes "total"
-      :worker_connections 2048
+      :default_type "application/octet-stream"
+      :events {:use nil
+               :worker_connections 1024
+               :accept_mutex "off"}
       :server_names_hash_bucket_size 64})
 
 (def nginx-default-site
@@ -78,7 +82,7 @@
       :access_log (str nginx-log-dir "/access.log")
       :root nil
       :try_files nil
-      :upstream_server nil})
+      :upstream_servers nil})
 
 (def nginx-default-location
      {:location "/"
@@ -87,6 +91,7 @@
       :proxy_pass nil
       :proxy_redirect nil
       :proxy_set_header nil
+      :proxy_buffering nil
       :rails-env nil
       :passenger-enabled nil})
 

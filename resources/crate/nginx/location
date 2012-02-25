@@ -3,6 +3,7 @@ location ~{location} {
   ~(when index (format "index %s;" (apply str (interpose " " index))))
   ~(when proxy_pass (format "proxy_pass %s;" proxy_pass))
   ~(when proxy_redirect (format "proxy_redirect %s;" proxy_redirect))
+  ~(when proxy_buffering (format "proxy_buffering %s;" proxy_buffering))
   ~(when proxy_set_header (apply str (map (fn [h] (format "proxy_set_header %s;\n" h)) proxy_set_header)))
   ~(when passenger-enabled (format "passenger_enabled %s;" passenger-enabled))
   ~(when rails-env (format "rails_env %s;" rails-env))

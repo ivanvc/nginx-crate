@@ -17,13 +17,15 @@
            (directory/directory "/etc/nginx/sites-enabled")
            (remote-file/remote-file
             "/etc/nginx/sites-enabled/mysite"
-            :content "server {\n  listen       80;\n  server_name  localhost;\n\n  access_log  /var/log/nginx/access.log;\n\nlocation / {\n  root /some/path;\n  index  index.html index.htm;\n  \n  \n  \n}\n\nlocation /a {\n  \n  index  index.html index.htm;\n  proxy_pass localhost:8080;\n  \n  \n}\n\n}\n")
+            :content "\n\nserver {\n  listen       80;\n  server_name  localhost;\n\n  access_log  /var/log/nginx/access.log;\n  \n  \n\nlocation / {\n  root /some/path;\n  index index.html index.htm;\n  \n  \n  \n  \n  \n}\n\nlocation /a {\n  \n  \n  proxy_pass localhost:8080;\n  \n  proxy_set_header a;\nproxy_set_header b;\n\n  \n  \n}\n\n\n  \n}\n")
            (file/file
             "/etc/nginx/sites-available/mysite" :action :delete :force true)))
          (first
           (build-actions/build-actions
            {:server {:group-name :n :image {:os-family :ubuntu}}}
            (site "mysite"
-                 :locations [{:location "/" :root "/some/path"}
+                 :locations [{:location "/" :root "/some/path"
+                              :index ["index.html" "index.htm"]}
                              {:location "/a"
-                              :proxy_pass "localhost:8080"}]))))))
+                              :proxy_pass "localhost:8080"
+                              :proxy_set_header ["a" "b"]}]))))))

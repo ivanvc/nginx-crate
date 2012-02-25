@@ -75,13 +75,18 @@
 (def nginx-default-site
      {:listen "80"
       :server_name "localhost"
-      :access_log (str nginx-log-dir "/access.log")})
+      :access_log (str nginx-log-dir "/access.log")
+      :root nil
+      :try_files nil
+      :upstream_server nil})
 
 (def nginx-default-location
      {:location "/"
       :root nil
-      :index ["index.html" "index.htm"]
+      :index nil
       :proxy_pass nil
+      :proxy_redirect nil
+      :proxy_set_header nil
       :rails-env nil
       :passenger-enabled nil})
 

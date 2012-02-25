@@ -1,8 +1,14 @@
+~(when upstream_server (format "upstream app_server { server %s; }" upstream_server))
+
 server {
   listen       ~{listen};
   server_name  ~{server_name};
 
   access_log  ~{access_log};
+  ~(when root (format "root %s;" root))
+  ~(when try_files (format "try_files %s;" try_files))
 
 ~{locations}
+
+  ~(when root (format "error_page 500 502 503 504 /500.html; location = /500.html { root: %s; }" root))
 }

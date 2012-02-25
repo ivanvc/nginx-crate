@@ -72,8 +72,7 @@
       :keepalive_timeout 65
       :default_type "application/octet-stream"
       :events {:use nil
-               :worker_connections 1024
-               :accept_mutex "off"}
+               :worker_connections 1024}
       :server_names_hash_bucket_size 64})
 
 (def nginx-default-site

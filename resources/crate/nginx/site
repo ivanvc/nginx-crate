@@ -1,4 +1,4 @@
-~(when upstream_servers (apply str "upstream app_server {\n" (map (fn [s] (format "  server %s;\n" s)) upstream_servers "}")))
+~(when upstream_servers (str "upstream app_server {\n" (apply str (map #(format "  server %s;\n" %) upstream_servers)) "}"))
 
 server {
   listen       ~{listen};
